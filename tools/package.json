@@ -1,0 +1,1 @@
+{ "name": "rider-build", "private": true, "dependencies": { "pdfmake": "0.2.10" } }

@@ -1,0 +1,152 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Райдер на проектирование</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}/* Layout: single column manual — header, type grid for contractors; editor = toolbar + section list with rule rows. */
+:root {
+  --bg: #f7f5f1; --paper: #ffffff; --ink: #1f1e1c; --mute: #6f6a62; --line: #e1dbd0;
+  --acc: #9c4f27; --acc-soft: #f3e6dc; --ok: #2f6b4f; --no: #b3261e; --rec: #1f1e1c;
+  --chip: #efebe4; --focus: #2b63c6;
+  --f-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --f-body: "Inter", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #171614; --paper: #201f1c; --ink: #ece8e1; --mute: #a39d93; --line: #35322d;
+  --acc: #e08b5c; --acc-soft: #3a2a20; --ok: #6fbf96; --no: #ef7b70; --rec: #ece8e1; --chip: #2a2825; --focus: #7aa7ff; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #171614; --paper: #201f1c; --ink: #ece8e1; --mute: #a39d93; --line: #35322d;
+  --acc: #e08b5c; --acc-soft: #3a2a20; --ok: #6fbf96; --no: #ef7b70; --rec: #ece8e1; --chip: #2a2825; --focus: #7aa7ff; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 64px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* header */
+.top { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: flex-end; justify-content: space-between; border-top: 4px solid var(--ink); padding-top: 18px; margin-bottom: 26px; }
+.kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--acc); font-weight: 600; margin-bottom: 8px; }
+.top h1 { font-size: clamp(28px, 4.4vw, 42px); line-height: 1.05; font-weight: 600; }
+.top .meta { font-family: var(--f-mono); font-size: 12.5px; color: var(--mute); }
+.modes { display: flex; gap: 4px; background: var(--chip); border-radius: 8px; padding: 3px; }
+.modes button { border: 0; background: transparent; padding: 7px 12px; border-radius: 6px; cursor: pointer; font-size: 13.5px; color: var(--mute); }
+.modes button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .12); font-weight: 600; }
+
+/* public grid */
+.intro { max-width: 68ch; color: var(--mute); margin: 0 0 22px; }
+.types { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.tcard { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tcard .no { font-family: var(--f-mono); font-size: 13px; color: var(--acc); font-weight: 600; }
+.tcard h2 { font-size: 17.5px; line-height: 1.2; font-weight: 600; }
+.tcard details { font-size: 13.5px; color: var(--mute); }
+.tcard summary { cursor: pointer; color: var(--ink); font-size: 13.5px; }
+.tcard ol { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 3px; }
+.tcard li { display: grid; grid-template-columns: 38px 1fr; gap: 6px; }
+.tcard li span { font-family: var(--f-mono); color: var(--mute); font-size: 12.5px; }
+.tcard li.sp { color: var(--ink); font-weight: 600; } .tcard li.sp span { color: var(--acc); }
+.tcard li.ch { margin-top: 4px; color: var(--ink); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+.tcard .foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 6px; border-top: 1px solid var(--line); }
+.tcard .cnt { font-size: 12.5px; color: var(--mute); font-family: var(--f-mono); }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: var(--paper); padding: 8px 14px; border-radius: 7px; cursor: pointer; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.btn:hover { filter: brightness(1.15); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); font-weight: 500; }
+.btn.acc { background: var(--acc); border-color: var(--acc); color: #fff; }
+.btn[disabled] { opacity: .45; cursor: default; filter: none; }
+.btn.sm { padding: 5px 10px; font-size: 13px; }
+.status { font-size: 13px; color: var(--mute); min-height: 1.4em; }
+.status.err { color: var(--no); }
+
+
+a.btn { text-decoration: none; display: inline-block; }
+.how { font-size: 13.5px; color: var(--mute); margin: 26px 0 0; max-width: 72ch; }
+
+.logbtn { margin: 0 0 22px; }
+.log { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 0 0 26px; }
+.log h2 { font-size: 18px; margin: 0 0 10px; }
+.tw { overflow-x: auto; }
+.log table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
+.log th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--mute); font-weight: 600; padding: 6px 10px 8px 0; border-bottom: 1px solid var(--ink); }
+.log td { padding: 9px 10px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.log td.d { font-family: var(--f-mono); white-space: nowrap; color: var(--mute); }
+.tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+.tag.add { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+.tag.mod { background: var(--acc-soft); color: var(--acc); }
+.tag.del { background: color-mix(in srgb, var(--no) 14%, transparent); color: var(--no); }
+.tag.pub { background: var(--chip); color: var(--ink); }
+.loghead { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; } .loghead h2 { margin: 0; }
+.propose { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 0 0 26px; }
+.propose .sub { color: var(--mute); font-size: 13.5px; margin: 0 0 6px; }
+.propose form { display: grid; gap: 14px; margin-top: 10px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.grid2 .wide { grid-column: 1 / -1; }
+.propose label { display: grid; gap: 5px; font-size: 12.5px; font-weight: 600; color: var(--mute); text-transform: uppercase; letter-spacing: .05em; }
+.propose input[type=text], .propose input[type=email], .propose select, .propose textarea { font: inherit; font-size: 15px; text-transform: none; letter-spacing: 0; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; width: 100%; box-sizing: border-box; }
+.propose textarea { min-height: 110px; resize: vertical; }
+.dz { border: 1.5px dashed var(--line); border-radius: 9px; padding: 14px; background: var(--bg); }
+.dz.over { border-color: var(--acc); background: var(--acc-soft); }
+.dz p { margin: 0 0 8px; font-size: 14px; }
+.dz ul { margin: 8px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--mute); }
+.factions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.ok { color: var(--ok); font-weight: 600; margin: 8px 0 0; }
+</style></head><body>
+<div class="wrap">
+<header class="top"><div><div class="kicker">Райдер на проектирование · инструкция по применению</div><h1>Требования к проектированию объектов</h1><div class="meta">Редакция от 10.11.2026</div></div></header>
+<p class="intro">Выберите тип объекта и скачайте PDF. В каждом документе — общие разделы 2–5 и специальные требования раздела 6 для выбранного типа. Файлы всегда актуальны и скачиваются без регистрации.</p>
+<section class="log" id="log"><div class="loghead"><h2>Последние изменения</h2></div>
+<div class="tw"><table><thead><tr><th>Дата</th><th>Что</th><th>Требование</th><th>Раздел</th><th>Для объектов</th></tr></thead><tbody><tr><td class="d">10.11.2026</td><td><span class="tag add">Добавлено</span></td><td>На личных объектах рассматривать организацию волейбольной площадки</td><td>4.1 Общие требования</td><td>ИЖС</td></tr><tr><td class="d">10.11.2026</td><td><span class="tag add">Добавлено</span></td><td>Такой тип мебели используем на улице</td><td>4.5 Мебель</td><td>Гостиницы, Общепит, Парки, ЖК, ИЖС</td></tr><tr><td class="d">10.11.2026</td><td><span class="tag pub">Опубликовано</span></td><td>Первая онлайн-редакция райдера: 184 требования, 23 схемы</td><td>Разделы 2–6</td><td>Все типы</td></tr></tbody><tbody id="older" hidden></tbody></table></div>
+</section>
+
+<section class="propose" id="propose">
+<div class="loghead"><h2>Предложить изменение</h2><button class="btn acc sm" id="propbtn" aria-expanded="false" aria-controls="propform">Открыть форму</button></div>
+<p class="sub">Нашли неточность или хотите предложить решение? Опишите его и приложите материалы. Предложение не попадёт в райдер автоматически — его рассматривает Заказчик.</p>
+<form id="propform" hidden  method="POST" enctype="multipart/form-data">
+<input type="hidden" name="_subject" value="Райдер: предложение изменения">
+<input type="hidden" name="_template" value="table">
+<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+<div class="grid2">
+<label>Имя<input type="text" name="Имя" id="f-name" required></label>
+<label>Компания<input type="text" name="Компания" id="f-company"></label>
+<label>Почта для ответа<input type="email" name="email" id="f-email" required></label>
+<label>Тип объекта<select name="Тип объекта" id="f-type"><option>Все типы</option><option>6.1 Аэровокзальные комплексы и здания аэровокзалов</option><option>6.2 Гостиничные комплексы и объекты размещения</option><option>6.3 СПА- и оздоровительные комплексы</option><option>6.4 Объекты общественного питания</option><option>6.5 Административные, общественные и офисные здания</option><option>6.6 Спортивные объекты и сооружения</option><option>6.7 Образовательные учреждения</option><option>6.8 Храмовые и духовно-просветительские объекты</option><option>6.9 Парки, общественные пространства и объекты благоустройства</option><option>6.10 Многоквартирные жилые комплексы</option><option>6.11 Индивидуальные жилые дома премиального сегмента</option></select></label>
+<label class="wide">Раздел райдера<select name="Раздел" id="f-sec"><option>Новый раздел / не знаю</option><option>2.1 Общие требования к подаче материалов</option><option>2.2 Общие требования к согласованиям</option><option>3.1 Общие требования</option><option>3.2 Фасадные решения</option><option>3.3 Планировочные решения</option><option>3.4 Входные группы и навесы</option><option>3.5 Фасадное освещение</option><option>4.1 Общие требования</option><option>4.2 Освещение</option><option>4.3 Санузлы и сантехнические приборы</option><option>4.4 СПА и бассейны</option><option>4.5 Мебель</option><option>4.6 Отделочные материалы и оконечные устройства</option><option>5.1 Общие требования</option><option>5.2 Транспорт и логистика</option><option>5.3 Озеленение</option><option>5.4 Покрытия и ограждения</option><option>5.5 Освещение территории</option><option>6 Специальные требования по типу объекта</option></select></label>
+<label class="wide">Что предлагаете<textarea name="Предложение" id="f-text" required placeholder="Суть изменения и почему оно нужно"></textarea></label>
+</div>
+<div class="dz" id="dz"><p><b>Перетащите файлы сюда</b> или выберите их — фото, схемы, PDF. Лучше до 5 МБ на файл.</p>
+<input type="file" name="attachment" id="f-files" multiple accept="image/*,.pdf,.dwg,.doc,.docx,.xls,.xlsx,.zip">
+<ul id="flist"></ul></div>
+<div class="factions"><button class="btn" type="submit" disabled>Отправить на согласование</button><span class="sub">Приём предложений откроется в ближайшее время.</span></div>
+</form>
+<p class="ok" id="sentmsg" hidden>Спасибо! Предложение отправлено на согласование.</p>
+</section>
+<div class="types"><article class="tcard"><div class="no">6.1</div><h2>Аэровокзальные комплексы и здания аэровокзалов</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.1</span>Аэровокзальные комплексы и здания аэровокзалов</li></ol></details>
+<div class="foot"><span class="cnt">124 требований · PDF 2,6 МБ</span><a class="btn" href="pdf/rider-6-1-aerovokzaly.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.2</div><h2>Гостиничные комплексы и объекты размещения</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.2</span>Гостиничные комплексы и объекты размещения</li></ol></details>
+<div class="foot"><span class="cnt">151 требований · PDF 4,7 МБ</span><a class="btn" href="pdf/rider-6-2-gostinicy.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.3</div><h2>СПА- и оздоровительные комплексы</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.3</span>СПА- и оздоровительные комплексы</li></ol></details>
+<div class="foot"><span class="cnt">122 требований · PDF 2,6 МБ</span><a class="btn" href="pdf/rider-6-3-spa.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.4</div><h2>Объекты общественного питания</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.4</span>Объекты общественного питания</li></ol></details>
+<div class="foot"><span class="cnt">119 требований · PDF 3,3 МБ</span><a class="btn" href="pdf/rider-6-4-obshchepit.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.5</div><h2>Административные, общественные и офисные здания</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.5</span>Административные, общественные и офисные здания</li></ol></details>
+<div class="foot"><span class="cnt">121 требований · PDF 3,0 МБ</span><a class="btn" href="pdf/rider-6-5-ofisy.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.6</div><h2>Спортивные объекты и сооружения</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.6</span>Спортивные объекты и сооружения</li></ol></details>
+<div class="foot"><span class="cnt">121 требований · PDF 2,6 МБ</span><a class="btn" href="pdf/rider-6-6-sport.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.7</div><h2>Образовательные учреждения</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.7</span>Образовательные учреждения</li></ol></details>
+<div class="foot"><span class="cnt">114 требований · PDF 2,6 МБ</span><a class="btn" href="pdf/rider-6-7-obrazovanie.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.8</div><h2>Храмовые и духовно-просветительские объекты</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.8</span>Храмовые и духовно-просветительские объекты</li></ol></details>
+<div class="foot"><span class="cnt">119 требований · PDF 2,6 МБ</span><a class="btn" href="pdf/rider-6-8-hramy.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.9</div><h2>Парки, общественные пространства и объекты благоустройства</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.9</span>Парки, общественные пространства и объекты благоустройства</li></ol></details>
+<div class="foot"><span class="cnt">119 требований · PDF 3,6 МБ</span><a class="btn" href="pdf/rider-6-9-parki.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.10</div><h2>Многоквартирные жилые комплексы</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.10</span>Многоквартирные жилые комплексы</li></ol></details>
+<div class="foot"><span class="cnt">121 требований · PDF 3,1 МБ</span><a class="btn" href="pdf/rider-6-10-zhk.pdf" download>Скачать PDF</a></div></article><article class="tcard"><div class="no">6.11</div><h2>Индивидуальные жилые дома премиального сегмента</h2>
+<details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.11</span>Индивидуальные жилые дома премиального сегмента</li></ol></details>
+<div class="foot"><span class="cnt">150 требований · PDF 5,5 МБ</span><a class="btn" href="pdf/rider-6-11-izhs.pdf" download>Скачать PDF</a></div></article></div>
+<p class="how" style="font-size:13.5px;color:var(--mute);margin:26px 0 0">Отступления от требований согласуются с Заказчиком письменно.</p>
+</div>
+<script>const b=document.getElementById('logbtn'),o=document.getElementById('older');if(b)b.onclick=()=>{o.hidden=!o.hidden;b.setAttribute('aria-expanded',String(!o.hidden));b.textContent=o.hidden?'Весь журнал':'Свернуть';};</script>
+<script>(()=>{const b=document.getElementById('propbtn'),f=document.getElementById('propform');b.onclick=()=>{f.hidden=!f.hidden;b.setAttribute('aria-expanded',String(!f.hidden));b.textContent=f.hidden?'Открыть форму':'Скрыть форму';};
+const dz=document.getElementById('dz'),inp=document.getElementById('f-files'),list=document.getElementById('flist');
+const show=()=>{list.innerHTML='';[...inp.files].forEach(x=>{const li=document.createElement('li');li.textContent=x.name+' — '+(x.size/1048576).toFixed(1)+' МБ';list.appendChild(li);});};
+inp.onchange=show;dz.ondragover=e=>{e.preventDefault();dz.classList.add('over');};dz.ondragleave=()=>dz.classList.remove('over');
+dz.ondrop=e=>{e.preventDefault();dz.classList.remove('over');const dt=new DataTransfer();[...inp.files,...e.dataTransfer.files].forEach(x=>dt.items.add(x));inp.files=dt.files;show();};
+if(location.hash==='#sent'){document.getElementById('sentmsg').hidden=false;document.getElementById('propose').scrollIntoView();}})();</script>
+</body></html>
