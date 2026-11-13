@@ -1,0 +1,35 @@
+name: Публикация требований райдера
+on:
+  issues:
+    types: [labeled]
+permissions:
+  contents: write
+  issues: read
+concurrency:
+  group: rider-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.label.name == 'publish-rider'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Проверка и внесение требования
+        run: python3 tools/publish_issue.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+      - name: Генерация PDF и сайта
+        run: |
+          npm ci --prefix tools
+          node tools/build.js
+      - name: Публикация и журнал
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/rider.json data/changelog.json index.html pdf/
+          git diff --cached --quiet || (git commit -m "Publish rider requirement from issue #${{ github.event.issue.number }}" && git push)
