@@ -59,7 +59,7 @@ function pdf(def, file) {
 <div class="wrap">
 <header class="top"><div><div class="kicker">Райдер на проектирование · инструкция по применению</div><h1>Требования к проектированию объектов</h1><div class="meta">Редакция от ${esc(S.meta.date)}</div></div></header>
 <p class="intro">Выберите тип объекта и скачайте PDF. В каждом документе — общие разделы 2–5 и специальные требования раздела 6 для выбранного типа. Файлы всегда актуальны и скачиваются без регистрации.</p>
-<section class="log" id="log"><div class="loghead"><h2>Последние изменения</h2>${older ? '<button class="btn ghost sm" id="logbtn" aria-expanded="false">Весь журнал</button>' : ''}</div>
+<p style="margin:18px 0"><a class="btn acc" href="add.html" style="display:inline-block;text-decoration:none">＋ Добавить требование на согласование</a> <a class="btn ghost" href="#log" style="display:inline-block;text-decoration:none">Журнал изменений</a></p>\n<section class="log" id="log"><div class="loghead"><h2>Последние изменения</h2>${older ? '<button class="btn ghost sm" id="logbtn" aria-expanded="false">Весь журнал</button>' : ''}</div>
 ${recent ? `<div class="tw"><table>${head}<tbody>${recent}</tbody><tbody id="older" hidden>${older}</tbody></table></div>` : '<p>Изменений пока нет.</p>'}
 </section>
 
