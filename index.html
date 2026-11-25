@@ -97,11 +97,11 @@ a.btn { text-decoration: none; display: inline-block; }
 </section>
 
 <section class="propose" id="propose">
-<div class="loghead"><h2>Предложить изменение</h2><button class="btn acc sm" id="propbtn" aria-expanded="false" aria-controls="propform">Открыть форму</button></div>
+<div class="loghead"><h2>Предложить изменение</h2><button class="btn acc sm" id="propbtn" aria-expanded="true" aria-controls="propform">Скрыть форму</button></div>
 <p class="sub">Нашли неточность или хотите предложить решение? Опишите его и приложите материалы. Предложение не попадёт в райдер автоматически — его рассматривает Заказчик.</p>
-<form id="propform" hidden action="https://formsubmit.co/predstavitelzakazchika@gmail.com" method="POST" enctype="multipart/form-data">
+<form id="propform" action="https://formsubmit.co/predstavitelzakazchika@gmail.com" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="_subject" value="Райдер: предложение изменения">
-<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://rider-docs.github.io/Rider/#sent">
 <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 <div class="grid2">
 <label>Имя<input type="text" name="Имя" id="f-name" required></label>
@@ -111,12 +111,12 @@ a.btn { text-decoration: none; display: inline-block; }
 <label class="wide">Раздел райдера<select name="Раздел" id="f-sec"><option>Новый раздел / не знаю</option><option>2.1 Общие требования к подаче материалов</option><option>2.2 Общие требования к согласованиям</option><option>3.1 Общие требования</option><option>3.2 Фасадные решения</option><option>3.3 Планировочные решения</option><option>3.4 Входные группы и навесы</option><option>3.5 Фасадное освещение</option><option>4.1 Общие требования</option><option>4.2 Освещение</option><option>4.3 Санузлы и сантехнические приборы</option><option>4.4 СПА и бассейны</option><option>4.5 Мебель</option><option>4.6 Отделочные материалы и оконечные устройства</option><option>5.1 Общие требования</option><option>5.2 Транспорт и логистика</option><option>5.3 Озеленение</option><option>5.4 Покрытия и ограждения</option><option>5.5 Освещение территории</option><option>6 Специальные требования по типу объекта</option></select></label>
 <label class="wide">Что предлагаете<textarea name="Предложение" id="f-text" required placeholder="Суть изменения и почему оно нужно"></textarea></label>
 </div>
-<div class="dz" id="dz"><p><b>Перетащите файлы сюда</b> или выберите их — фото, схемы, PDF. Лучше до 5 МБ на файл.</p>
-<input type="file" name="attachment" id="f-files" multiple accept="image/*,.pdf,.dwg,.doc,.docx,.xls,.xlsx,.zip">
+<div class="dz" id="dz"><p><b>Прикрепите файл</b> или выберите их — фото, схемы, PDF. До 5 МБ. Несколько материалов объедините в ZIP.</p>
+<input type="file" name="attachment" id="f-files" accept="image/*,.pdf,.dwg,.doc,.docx,.xls,.xlsx,.zip">
 <ul id="flist"></ul></div>
-<div class="factions"><button class="btn" type="submit">Отправить на согласование</button><span class="sub">Заявка направляется Заказчику на согласование. Регистрация не требуется.</span></div>
+<div class="factions"><button class="btn" type="submit">Отправить на согласование</button><span class="sub">Регистрация не требуется. Отправка через FormSubmit; при первой отправке получатель должен подтвердить адрес.</span></div>
 </form>
-<p class="ok" id="sentmsg" hidden>Спасибо! Предложение отправлено на согласование.</p>
+<p class="ok" id="sentmsg" hidden>Форма завершила отправку. Получение заявки подтверждается отдельно.</p>
 </section>
 <div class="types"><article class="tcard"><div class="no">6.1</div><h2>Аэровокзальные комплексы и здания аэровокзалов</h2>
 <details><summary>Разделы документа</summary><ol><li class="ch"><span>2</span>Общие требования</li><li><span>2.1</span>Общие требования к подаче материалов</li><li><span>2.2</span>Общие требования к согласованиям</li><li class="ch"><span>3</span>Архитектурные решения</li><li><span>3.1</span>Общие требования</li><li><span>3.2</span>Фасадные решения</li><li><span>3.3</span>Планировочные решения</li><li><span>3.4</span>Входные группы и навесы</li><li><span>3.5</span>Фасадное освещение</li><li class="ch"><span>4</span>Интерьерные решения</li><li><span>4.1</span>Общие требования</li><li><span>4.2</span>Освещение</li><li><span>4.3</span>Санузлы и сантехнические приборы</li><li><span>4.4</span>СПА и бассейны</li><li><span>4.5</span>Мебель</li><li><span>4.6</span>Отделочные материалы и оконечные устройства</li><li class="ch"><span>5</span>Благоустройство</li><li><span>5.1</span>Общие требования</li><li><span>5.2</span>Транспорт и логистика</li><li><span>5.3</span>Озеленение</li><li><span>5.4</span>Покрытия и ограждения</li><li><span>5.5</span>Освещение территории</li><li class="ch"><span>6</span>Специальные требования по типам объектов</li><li class="sp"><span>6.1</span>Аэровокзальные комплексы и здания аэровокзалов</li></ol></details>
@@ -150,4 +150,4 @@ const show=()=>{list.innerHTML='';[...inp.files].forEach(x=>{const li=document.c
 inp.onchange=show;dz.ondragover=e=>{e.preventDefault();dz.classList.add('over');};dz.ondragleave=()=>dz.classList.remove('over');
 dz.ondrop=e=>{e.preventDefault();dz.classList.remove('over');const dt=new DataTransfer();[...inp.files,...e.dataTransfer.files].forEach(x=>dt.items.add(x));inp.files=dt.files;show();};
 if(location.hash==='#sent'){document.getElementById('sentmsg').hidden=false;document.getElementById('propose').scrollIntoView();}})();</script>
-</body></html>
+<script>document.getElementById("propform").addEventListener("submit",function(e){const a=document.getElementById("f-files").files;if(a.length>1||Array.from(a).some(x=>x.size>5*1024*1024)){e.preventDefault();alert("Прикрепите один файл размером до 5 МБ.");}});</script></body></html>
