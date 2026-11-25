@@ -26,9 +26,13 @@ jobs:
           assert len(parts)==30
           raw=base64.b64decode(''.join(p.read_text().strip() for p in parts),validate=True)
           assert len(raw)==5356859 and raw.startswith(b'%PDF-')
-          pathlib.Path('pdf/rider-6-1-aerovokzaly.pdf').write_bytes(raw)
-          pathlib.Path('pdf/rider-6-1-aerovokzaly-20261125.pdf').write_bytes(raw)
+          pathlib.Path('pdf/airport-special-20261125.pdf').write_bytes(raw)
+
           PY
+      - name: Install PDF assembly library
+        run: python3 -m pip install pypdf
+      - name: Assemble complete airport volume and master
+        run: python3 tools/assemble-volumes.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
