@@ -1,0 +1,37 @@
+name: Publish contractor site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble and verify revised airport PDF
+        run: |
+          python3 - <<'PY'
+          import base64,pathlib
+          parts=sorted(pathlib.Path('staging/airport-20261125').glob('part-*.b64'))
+          assert len(parts)==30
+          raw=base64.b64decode(''.join(p.read_text().strip() for p in parts),validate=True)
+          assert len(raw)==5356859 and raw.startswith(b'%PDF-')
+          pathlib.Path('pdf/rider-6-1-aerovokzaly.pdf').write_bytes(raw)
+          pathlib.Path('pdf/rider-6-1-aerovokzaly-20261125.pdf').write_bytes(raw)
+          PY
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - uses: actions/deploy-pages@v4
+        id: deployment
