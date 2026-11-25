@@ -91,7 +91,7 @@ a.btn { text-decoration: none; display: inline-block; }
 <div class="wrap">
 <header class="top"><div><div class="kicker">Райдер на проектирование · инструкция по применению</div><h1>Требования к проектированию объектов</h1><div class="meta">Редакция от 25.11.2026</div></div></header>
 <p class="intro">Выберите тип объекта и скачайте PDF. В каждом документе — общие разделы 2–5 и специальные требования раздела 6 для выбранного типа. Файлы всегда актуальны и скачиваются без регистрации.</p>
-<p style="margin:18px 0"><a class="btn acc" href="add.html" style="display:inline-block;text-decoration:none">＋ Добавить требование на согласование</a> <a class="btn ghost" href="#log" style="display:inline-block;text-decoration:none">Журнал изменений</a></p>\n<p><b>25.11.2026:</b> <a href="pdf/rider-6-1-aerovokzaly-20261125.pdf" download>Новая редакция раздела 6.1 — аэровокзалы</a>.</p><p><a class="btn" href="pdf/rider-all-volumes-20261125.pdf" download>Скачать сборник всех 11 томов</a> <span>Общие разделы повторяются в каждом томе.</span></p>
+<p style="margin:18px 0"><a class="btn acc" href="#propose" style="display:inline-block;text-decoration:none">Предложить изменение</a> <a class="btn ghost" href="#log" style="display:inline-block;text-decoration:none">Журнал изменений</a></p>\n<p><b>25.11.2026:</b> <a href="pdf/rider-6-1-aerovokzaly-20261125.pdf" download>Новая редакция раздела 6.1 — аэровокзалы</a>.</p><p><a class="btn" href="pdf/rider-all-volumes-20261125.pdf" download>Скачать сборник всех 11 томов</a> <span>Общие разделы повторяются в каждом томе.</span></p>
 <section class="log" id="log"><div class="loghead"><h2>Последние изменения</h2></div>
 <div class="tw"><table><thead><tr><th>Дата</th><th>Что</th><th>Требование</th><th>Раздел</th><th>Для объектов</th></tr></thead><tbody><tr><td class="d">10.11.2026</td><td><span class="tag add">Добавлено</span></td><td>На личных объектах рассматривать организацию волейбольной площадки</td><td>4.1 Общие требования</td><td>ИЖС</td></tr><tr><td class="d">10.11.2026</td><td><span class="tag add">Добавлено</span></td><td>Такой тип мебели используем на улице</td><td>4.5 Мебель</td><td>Гостиницы, Общепит, Парки, ЖК, ИЖС</td></tr><tr><td class="d">10.11.2026</td><td><span class="tag pub">Опубликовано</span></td><td>Первая онлайн-редакция райдера: 184 требования, 23 схемы</td><td>Разделы 2–6</td><td>Все типы</td></tr></tbody><tbody id="older" hidden></tbody></table></div>
 </section>
@@ -99,7 +99,7 @@ a.btn { text-decoration: none; display: inline-block; }
 <section class="propose" id="propose">
 <div class="loghead"><h2>Предложить изменение</h2><button class="btn acc sm" id="propbtn" aria-expanded="false" aria-controls="propform">Открыть форму</button></div>
 <p class="sub">Нашли неточность или хотите предложить решение? Опишите его и приложите материалы. Предложение не попадёт в райдер автоматически — его рассматривает Заказчик.</p>
-<form id="propform" hidden  method="POST" enctype="multipart/form-data">
+<form id="propform" hidden action="https://formsubmit.co/predstavitelzakazchika@gmail.com" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="_subject" value="Райдер: предложение изменения">
 <input type="hidden" name="_template" value="table">
 <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
@@ -114,7 +114,7 @@ a.btn { text-decoration: none; display: inline-block; }
 <div class="dz" id="dz"><p><b>Перетащите файлы сюда</b> или выберите их — фото, схемы, PDF. Лучше до 5 МБ на файл.</p>
 <input type="file" name="attachment" id="f-files" multiple accept="image/*,.pdf,.dwg,.doc,.docx,.xls,.xlsx,.zip">
 <ul id="flist"></ul></div>
-<div class="factions"><button class="btn" type="submit" disabled>Отправить на согласование</button><span class="sub">Приём предложений откроется в ближайшее время.</span></div>
+<div class="factions"><button class="btn" type="submit">Отправить на согласование</button><span class="sub">Заявка направляется Заказчику на согласование. Регистрация не требуется.</span></div>
 </form>
 <p class="ok" id="sentmsg" hidden>Спасибо! Предложение отправлено на согласование.</p>
 </section>
